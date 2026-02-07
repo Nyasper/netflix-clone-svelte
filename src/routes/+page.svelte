@@ -1,59 +1,33 @@
 <script lang="ts">
-	import Header from "$lib/components/Header.svelte";
+  import HeroSection from '$lib/components/HeroSection.svelte';
+  import type { PageProps } from './$types';
+  import { getMoviesContext } from '$lib/stores/MovieStore.svelte';
+  import Carousel from '$lib/components/Carousel.svelte';
 
-	let state = $state(false);
-	const changeState = () => {
-		state = !state;
-	};
+  const { data }: PageProps = $props();
+  const movieStore = getMoviesContext();
+
+  $effect(() => {
+    movieStore.popularMovies = data.popularMovies;
+  });
 </script>
 
-
-<Header />
 <h1>Main Page</h1>
+<HeroSection />
 
-<div class={`a ${state ? '' : ''}`}>
-	a
-</div>
-<div class={['b', {'replace': state}]}>
-	b
-</div>
+<div class="absolute top-[35vh] flex w-full flex-col space-y-4 pl-10 md:top-[65vh] lg:top-[85vh]">
+  <Carousel title="Popular Movies" movies={data.popularMovies} />
+  <Carousel title="Trending Movies" movies={data.trendingMovies} />
+  <Carousel title="Top-Rated Movies" movies={data.topRatedMovies} />
 
-<button onclick={changeState}>Change State ({state})</button>
+  {#each data.moviesByGenre as { id, name: title, movies } (id)}
+    <Carousel {title} {movies} />
+  {/each}
+</div>
 
 <style>
-	:global(body) {
-		min-height: 200vh;
-	}
-
-
-	h1 {
-		color: white;
-		font-size: 3em;
-		text-align: center;
-		margin-top: 2rem;
-	}
-	button {
-		margin-top: 2rem;
-		padding: 0.5rem 1rem;
-		font-size: 1rem;
-		background-color: white;
-		cursor: pointer;
-	}
-
-	.a {
-		width: 100px;
-		height: 100px;
-		background-color: white;
-	}
-	.b {
-		width: 100px;
-		height: 100px;
-		background-color: grey;
-	}
-
-	.replace {
-		background-color: yellow;
-	}
+  :global(body) {
+    min-height: 200vh;
+    color: white;
+  }
 </style>
-
-

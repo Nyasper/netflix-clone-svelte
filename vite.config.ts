@@ -8,9 +8,11 @@ export default defineConfig({
 
 	test: {
 		expect: { requireAssertions: true },
-
 		projects: [
 			{
+				optimizeDeps: {
+					include: ['@lucide/svelte']
+				},
 				extends: './vite.config.ts',
 
 				test: {
