@@ -86,27 +86,34 @@ export const getMovieById = async (
 export const getSimiliarMovies = async (
 	fetchFn: typeof fetch,
 	movieId: string
-): Promise<Movie[] | null> => {
+): Promise<Movie[]> => {
 	const response = await fetchFn(
 		`${BASE_URL}/movie/${movieId}/similar?api_key=${TMDB_API_KEY}`
 	);
 	const data = await handleFetchResponse(response);
-	return data?.results || [];
+	console.log("Similar Movies Data:", data);
+	return (data?.results) as Movie[] || [];
 };
 
 export const searchMovies = async (
-	fetchFn: typeof fetch,
-	keyword: string,
-	page: number = 1
+	{
+		fetchFn,
+		searchQuery,
+		page = 1
+	}: {
+		fetchFn: typeof fetch;
+		searchQuery: string;
+		page: number;
+	}
 ): Promise<Movie[]> => {
-	if (!keyword.trim()) {
+	if (!searchQuery.trim()) {
 		return [];
 	}
 
-	const encodedKeyword = encodeURIComponent(keyword.trim());
+	const encodedQuery = encodeURIComponent(searchQuery.trim());
 	const data = await tmdbFetch<TMDBRespones<{ id: number; title: string; backdrop_path: string }>>(
 		'search/movie',
-		{ query: encodedKeyword, page },
+		{ query: encodedQuery, page },
 		fetchFn
 	);
 	return data?.results || [];

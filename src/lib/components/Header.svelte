@@ -2,13 +2,13 @@
   import logo from '$lib/assets/Netflix-LOGO.png';
   import profileImage from '$lib/assets/profile.jpg';
   import { scrollY } from 'svelte/reactivity/window';
-
-  // import { Search, Bell, ChevronRight, Menu, X } from '@lucide/svelte';
   import Search from '@lucide/svelte/icons/search';
   import Bell from '@lucide/svelte/icons/bell';
   import ChevronRight from '@lucide/svelte/icons/chevron-right';
   import Menu from '@lucide/svelte/icons/menu';
   import X from '@lucide/svelte/icons/x';
+  // import { Search, Bell, ChevronRight, Menu, X } from '@lucide/svelte'; (slow imports)
+  import { goto } from '$app/navigation';
 
   let isSearchActive: boolean = $state(false);
   let isMenuOpen: boolean = $state(false);
@@ -22,7 +22,20 @@
     e.stopPropagation();
     isSearchActive = !isSearchActive;
   };
-  const handleSearch = (e: KeyboardEvent) => {};
+
+  const handleSearch = async (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const query = searchQuery.trim();
+
+      if (query === '') return;
+
+      await goto(`/search?query=${encodeURIComponent(query)}`);
+
+      isSearchActive = false;
+      searchQuery = '';
+    }
+  };
 
   const toggleMenu = () => {
     isMenuOpen = !isMenuOpen;
@@ -45,6 +58,9 @@
     name: string;
     href: string;
   };
+  type MobileVerParam = {
+    mobile?: boolean;
+  };
 </script>
 
 <header
@@ -65,27 +81,7 @@
     </div>
 
     <div class="flex items-center space-x-4">
-      <div
-        id="search-bar"
-        class={['search-container hidden md:flex', { active: isSearchActive }]}
-        role="presentation"
-        onclick={toggleSearch}
-      >
-        <button class="search-button" aria-label="Toggle Search" onclick={toggleSearch}>
-          <Search size={20} color="white" />
-        </button>
-        <input
-          bind:this={searchInputRef}
-          bind:value={searchQuery}
-          placeholder="Seach"
-          aria-label="Search"
-          type="text"
-          name=""
-          id=""
-          class="search-input"
-          onkeydown={handleSearch}
-        />
-      </div>
+      {@render searchInput()}
       <Bell size={20} color="white" />
       <img src={profileImage} class="h-8 w-8 cursor-pointer rounded" alt="Profile" />
       <ChevronRight size={24} color="white" />
@@ -111,28 +107,7 @@
     </button>
 
     <!-- COPY PASTE DE SEARCH INPUT -->
-    <div
-      id="search-bar"
-      class={['search-container', { active: isSearchActive }]}
-      role="presentation"
-      onclick={toggleSearch}
-    >
-      <button class="search-button" aria-label="Toggle Search" onclick={toggleSearch}>
-        <Search size={20} color="white" />
-      </button>
-      <input
-        bind:this={searchInputRef}
-        bind:value={searchQuery}
-        placeholder="Seach"
-        aria-label="Search"
-        type="text"
-        name=""
-        id=""
-        class="search-input"
-        onkeydown={handleSearch}
-      />
-    </div>
-
+    {@render searchInput({ mobile: true })}
     {@render Navbar({ mobile: true })}
   </div>
 
@@ -154,6 +129,54 @@
         <a href={item.href} class="hover:text-gray-300">{item.name}</a>
       {/each}
     </nav>
+  {/if}
+{/snippet}
+
+{#snippet searchInput({ mobile }: { mobile: boolean } = { mobile: false })}
+  {#if mobile}
+    <div
+      id="search-bar"
+      class={['search-container', { active: isSearchActive }]}
+      role="presentation"
+      onclick={toggleSearch}
+    >
+      <button class="search-button" aria-label="Toggle Search" onclick={toggleSearch}>
+        <Search size={20} color="white" />
+      </button>
+      <input
+        bind:this={searchInputRef}
+        bind:value={searchQuery}
+        placeholder="Search"
+        aria-label="Search"
+        type="text"
+        name=""
+        id=""
+        class="search-input"
+        onkeydown={handleSearch}
+      />
+    </div>
+  {:else}
+    <div
+      id="search-bar"
+      class={['search-container hidden md:flex', { active: isSearchActive }]}
+      role="presentation"
+      onclick={toggleSearch}
+    >
+      <button class="search-button" aria-label="Toggle Search" onclick={toggleSearch}>
+        <Search size={20} color="white" />
+      </button>
+      <input
+        bind:this={searchInputRef}
+        bind:value={searchQuery}
+        placeholder="Seach"
+        aria-label="Search"
+        type="text"
+        name=""
+        id=""
+        class="search-input"
+        onkeydown={handleSearch}
+      />
+    </div>
   {/if}
 {/snippet}
 

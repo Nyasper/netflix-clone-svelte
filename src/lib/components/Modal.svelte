@@ -7,13 +7,15 @@
   import Volume2 from '@lucide/svelte/icons/volume-2';
   import VolumeOff from '@lucide/svelte/icons/volume-off';
   import Player from '$lib/components/Player.svelte';
-  import type PlayerComponent from '$lib/components/Player.svelte';
-  import { convertMinsToHrs } from '$lib/helpers';
+  import { convertMinsToHrs, handleNoImageError } from '$lib/helpers';
   import { getModalContext } from '$lib/stores/ModalStore.svelte';
   import { browser } from '$app/environment';
+  import { getFavoritesContext } from '$lib/stores/favoriteListStore.svelte';
   import { spokenLanguages as spokenLanguagesSnippet } from './Snippets/Modal.svelte';
+  import SimilarMovieCard from './SimilarMovieCard.svelte';
 
   const modalContext = getModalContext();
+  const { favorites, addToFavorites } = $derived(getFavoritesContext());
 
   let animationClass = $derived.by(() => {
     if (modalContext.isOpen) {
@@ -23,12 +25,8 @@
     return 'bounce-down';
   });
 
-  let movieId = $derived(modalContext.movieId || null);
-  let addedToFav = $state(false);
+  const addedToFav: boolean = $derived(favorites.some((fav) => fav.id === modalContext.movieId));
   let isMuted = $state(true);
-  let player: PlayerComponent | null = $state(null);
-
-  let shouldRender = $derived(modalContext.isOpen);
 
   const spokenLanguages = $derived(
     modalContext.movieData?.spoken_languages
@@ -39,9 +37,6 @@
       .join(', ') ?? ''
   );
 
-  const handleAddToFav = () => {
-    addedToFav = !addedToFav;
-  };
   const toggleMute = () => {
     isMuted = !isMuted;
   };
@@ -92,7 +87,7 @@
 
                   <button
                     class="rounded-full border-2 border-gray-700 p-3 transition-colors duration-200 hover:border-white"
-                    onclick={handleAddToFav}
+                    onclick={() => addToFavorites(modalContext.movieData!)}
                   >
                     {#if addedToFav}
                       <Check class="h-6 w-6 text-white" />
@@ -196,37 +191,97 @@
             </p>
           </div>
 
-          <!-- 
-        {#if loadingSimilarMovies}
-          <div class="mt-4">
-            <p class="text-center">Loading Similar Movies...</p>
-          </div>
-        {:else if errorLoadingSimilar}
-          <div class="mt-4">
-            <p class="text-center text-red-500">Error loading Similar Movies...</p>
-          </div>
-        {:else if similarMovies.length > 0}
-          <div>
-            <h1 class="my-4 text-2xl font-bold">More Like This</h1>
-            <div class="flex flex-wrap justify-center gap-x-4 gap-y-8 sm:justify-between">
-              {#each similarMovies.slice(0, 12) as item}
-          
-                <SimilarMovieCard
-                  description={item.overview}
-                  id={item.id.toString()}
-                  title={item.title}
-                  imageUrl={`https://image.tmdb.org/t/p/w500${item.backdrop_path}`}
-                />
-              {/each}
+          <!-- Similar Movies -->
+          {#if modalContext.loadingSimilarMovies}
+            <div class="mt-4">
+              <p class="text-center">Loading Similar Movies...</p>
             </div>
-          </div>
-        {/if}
-      -->
+          {:else if modalContext.similarMovies.length === 0}
+            <div class="mt-4">
+              <p class="text-center text-red-500">Similar Movies Not Found...</p>
+            </div>
+          {:else if modalContext.similarMovies.length > 0}
+            <div>
+              <h1 class="my-4 text-2xl font-bold">More Like This</h1>
+              <div class="flex flex-wrap justify-center gap-x-4 gap-y-8 sm:justify-between">
+                {#each modalContext.similarMovies.slice(0, 12) as similarMovie (similarMovie.id)}
+                  <SimilarMovieCard
+                    id={similarMovie.id}
+                    title={similarMovie.title!}
+                    description={similarMovie.overview!}
+                    imageUrl={`https://image.tmdb.org/t/p/w500${similarMovie.backdrop_path}`}
+                  />
+                {/each}
+              </div>
+            </div>
+          {/if}
         </div>
       </div>
     </div>
   </div>
 {/if}
+
+{#snippet similarMoviesS(params: {
+  id: number;
+  title: string;
+  description: string;
+  duration?: string;
+  imageUrl: string;
+  match?: string;
+  rating?: string;
+})}
+  <div class="w-40 rounded-lg bg-[#181818] text-white shadow-md sm:w-48">
+    <div class="relative">
+      <img
+        src={params.imageUrl}
+        alt={params.title}
+        onerror={handleNoImageError}
+        class="h-40 w-full rounded-t-lg object-cover"
+      />
+
+      <div
+        class="absolute top-2 right-2 rounded-md bg-[#000000b3] px-2 py-0.5 text-sm font-semibold text-white"
+      >
+        {params.duration}
+      </div>
+
+      <div class="absolute inset-0 bg-linear-to-t from-[#141414] to-transparent"></div>
+
+      <h3 class="absolute bottom-0 left-2 mb-1.5 text-base font-semibold">{params.title}</h3>
+    </div>
+
+    <div class="p-3">
+      <div class="mb-1 flex flex-col text-sm">
+        <div class="flex justify-between">
+          <div class="flex flex-col items-center justify-between">
+            <div class="text-[#46d369]">
+              <span>{params.match}</span>
+            </div>
+            <div class="text-[#b3b3b3]">
+              <span class="mr-2 border border-[#b3b3b3] px-1">{params.rating}</span>
+              <span>2023</span>
+            </div>
+          </div>
+
+          <div>
+            <button
+              onclick={() => {
+                goto(`watch/${params.id}`);
+                modalContext.closeModal();
+              }}
+              class="rounded-full border-2 border-gray-700 p-3 transition-colors duration-200 hover:border-white"
+            >
+              <Play class="h-6 w-6 text-white" /></button
+            >
+          </div>
+        </div>
+      </div>
+      <p class="mb-3 text-xs leading-tight text-[#b3b3b3]">
+        {params.description.substring(0, 50) + '...'}
+      </p>
+    </div>
+  </div>
+{/snippet}
 
 <style>
   .overlay {
@@ -241,7 +296,6 @@
   }
 
   .content {
-    height: 100%;
     position: relative;
     background-color: rgb(20, 20, 20);
     color: white;

@@ -6,7 +6,9 @@ export class ModalStore implements ModalState {
   isOpen = $state(false);
   trailerId = $state("");
   movieId = $state(0);
+  similarMovies: Movie[] = $state([]);
   loading = $state(false);
+  loadingSimilarMovies = $state(false);
   error: string | null = $state(null);
   movieData: MovieDetails | null = $state(null);
   #movieCache = new Map<number, MovieDetails>();
@@ -31,14 +33,7 @@ export class ModalStore implements ModalState {
     }
 
     this.fetchMovieDetails(movieId);
-
-
-
-    //  cardState.update((state)=>{
-    //     return {...state, isHovered: false, item: null, position: { x: -1000, y: 0 } }
-    // })
-
-
+    this.fetchSimilarMovies(movieId);
   };
 
   closeModal = () => {
@@ -53,7 +48,7 @@ export class ModalStore implements ModalState {
 
 
   private async fetchMovieDetails(movieId: number): Promise<void> {
-    console.log("Fetching movie details for ID:", movieId);
+    console.log("Fetching movie details...");
     try {
       const response = await fetch(`/api/movie/${movieId}`, {
         method: "GET",
@@ -92,7 +87,27 @@ export class ModalStore implements ModalState {
     }
   }
 
+  private async fetchSimilarMovies(movieId: number): Promise<void> {
+    console.log("Fetching similar movie...");
+    if (movieId === 0) return;
+    this.loadingSimilarMovies = true;
 
+    try {
+      const response = await fetch(`/api/movie/${movieId}/similar`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const data = await response.json();
+      this.similarMovies = (data.similarMovies as Movie[]) || [];
+    } catch (error) {
+      this.similarMovies = [];
+    } finally {
+      this.loadingSimilarMovies = false;
+    }
+  }
 }
 
 export const [getModalContext, setModalContext] = createContext<ModalStore>();

@@ -103,4 +103,6 @@ interface ModalState {
 	movieData: MovieDetails | null;
 	loading: boolean;
 	error: string | null;
+	similarMovies: Movie[];
+	loadingSimilarMovies: boolean;
 }

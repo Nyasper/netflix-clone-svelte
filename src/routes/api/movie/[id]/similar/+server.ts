@@ -1,5 +1,5 @@
 import { json } from "@sveltejs/kit";
-import { getMovieById, getSimiliarMovies } from "$lib/server/api/api";
+import { getSimiliarMovies } from "$lib/server/api/api";
 import type { RequestHandler } from "@sveltejs/kit";
 
 

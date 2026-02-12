@@ -12,7 +12,6 @@
   });
 </script>
 
-<h1>Main Page</h1>
 <HeroSection />
 
 <div class="absolute top-[35vh] flex w-full flex-col space-y-4 pl-10 md:top-[65vh] lg:top-[85vh]">

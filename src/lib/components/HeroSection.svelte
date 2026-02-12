@@ -16,7 +16,7 @@
   const modalContext = getModalContext();
 
   $effect(() => {
-    if (!selectedMovie || !selectedMovie.id) return;
+    if (!selectedMovie?.id) return;
 
     loadTrailer();
 
@@ -31,12 +31,6 @@
     isMuted = !isMuted;
   };
 </script>
-
-<h2>HERO</h2>
-<p>Selected Movie '{selectedMovie?.title}' (id: {selectedMovie?.id!})</p>
-<p>popular movie length: {popularMovies.length}</p>
-
-<h2>TRAILER {JSON.stringify(trailerId)}</h2>
 
 <main class="relative overflow-hidden">
   {#if trailerId}
@@ -59,7 +53,7 @@
       <p class="mb-6 hidden max-w-lg text-sm text-gray-300 md:block md:text-lg">
         {selectedMovie.overview?.substring(0, 200) + '...'}
       </p>
-      <div class="flex flex-wrap items-center space-y-2 space-x-4 md:space-y-8">
+      <div class="flex flex-wrap items-center">
         <div class="flex gap-4">
           <button
             class="flex items-center gap-2 rounded-md bg-white px-4 py-2 text-black transition hover:bg-gray-200"
