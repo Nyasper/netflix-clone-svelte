@@ -123,21 +123,20 @@
     --plyr-font-size-base: 16px;
     --plyr-font-weight-bold: 600;
   }
-
+  /*
   .plyr--video {
     height: 20px !important;
   }
-  /* Optional: Customize loading spinner */
+  
   .plyr__spinner {
     border-top-color: var(--plyr-color-main);
   }
 
-  /* Optional: Customize progress bar */
   .plyr__progress__filled {
     background-color: var(--plyr-color-main);
   }
 
-  /* Optional: Customize menu items */
+
   .plyr__menu__container {
     background-color: var(--plyr-menu-background);
   }
@@ -145,9 +144,9 @@
     color: var(--plyr-menu-color);
   }
 
-  /* Custom Mute Button Styles */
+
   .mute-button {
-    /* Adjust the size and positioning as needed */
+   
     width: 48px;
     height: 48px;
     display: flex;
@@ -161,8 +160,10 @@
     background-color: rgba(0, 0, 0, 0.7);
   }
 
-  /* Optional: Add cursor pointer */
+ 
   .mute-button {
     cursor: pointer;
   }
+
+  */
 </style>

@@ -15,7 +15,6 @@
 
   const isSticky: boolean = $derived((scrollY.current ?? 0) > 50);
 
-  let searchInputRef: HTMLInputElement;
   let searchQuery = $state('');
 
   const toggleSearch = (e: MouseEvent) => {
@@ -144,7 +143,6 @@
         <Search size={20} color="white" />
       </button>
       <input
-        bind:this={searchInputRef}
         bind:value={searchQuery}
         placeholder="Search"
         aria-label="Search"
@@ -166,7 +164,6 @@
         <Search size={20} color="white" />
       </button>
       <input
-        bind:this={searchInputRef}
         bind:value={searchQuery}
         placeholder="Seach"
         aria-label="Search"

@@ -11,7 +11,6 @@
   import { getModalContext } from '$lib/stores/ModalStore.svelte';
   import { browser } from '$app/environment';
   import { getFavoritesContext } from '$lib/stores/favoriteListStore.svelte';
-  import { spokenLanguages as spokenLanguagesSnippet } from './Snippets/Modal.svelte';
   import SimilarMovieCard from './SimilarMovieCard.svelte';
 
   const modalContext = getModalContext();

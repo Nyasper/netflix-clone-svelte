@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getMovieCardContext } from '$lib/stores/MovieCardState.svelte';
+  import { getMovieCardContext } from '$lib/stores/MovieCardStore.svelte';
 
   let divElement: HTMLDivElement | null = $state(null);
   let clientRectState: DOMRect | null = $state(null);
