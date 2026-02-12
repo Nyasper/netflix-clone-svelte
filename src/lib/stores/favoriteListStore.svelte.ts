@@ -34,7 +34,6 @@ export const createFavoriteListStore = () => {
     removeFromFavorites(movie: Movie) {
       favorites = favorites.filter(m => m.id !== movie.id);
       localStorage.setItem(key, JSON.stringify(favorites));
-      console.debug("removed from favorites", movie.title);
     }
   }
 }
@@ -67,7 +66,6 @@ class UseFavoriteList {
     }
     else {
       this.#favorites.push(movie)
-      console.log("added to favorites", movie.title);
     }
     localStorage.setItem(this.#key, JSON.stringify(this.#favorites));
   }
@@ -75,7 +73,6 @@ class UseFavoriteList {
   removeFromFavorites = (movie: Movie) => {
     this.#favorites = this.#favorites.filter(m => m.id !== movie.id);
     localStorage.setItem(this.#key, JSON.stringify(this.#favorites));
-    console.log("removed from favorites", movie.title);
   }
 
 }

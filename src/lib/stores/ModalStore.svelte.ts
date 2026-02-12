@@ -28,7 +28,6 @@ export class ModalStore implements ModalState {
 
       this.loading = false;
       this.isOpen = true;
-      console.log("Movie loaded from cache for ID:", movieId);
       return;
     }
 
@@ -48,7 +47,6 @@ export class ModalStore implements ModalState {
 
 
   private async fetchMovieDetails(movieId: number): Promise<void> {
-    console.log("Fetching movie details...");
     try {
       const response = await fetch(`/api/movie/${movieId}`, {
         method: "GET",
@@ -88,7 +86,6 @@ export class ModalStore implements ModalState {
   }
 
   private async fetchSimilarMovies(movieId: number): Promise<void> {
-    console.log("Fetching similar movie...");
     if (movieId === 0) return;
     this.loadingSimilarMovies = true;
 

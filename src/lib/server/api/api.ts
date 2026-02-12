@@ -91,7 +91,6 @@ export const getSimiliarMovies = async (
 		`${BASE_URL}/movie/${movieId}/similar?api_key=${TMDB_API_KEY}`
 	);
 	const data = await handleFetchResponse(response);
-	console.log("Similar Movies Data:", data);
 	return (data?.results) as Movie[] || [];
 };
 

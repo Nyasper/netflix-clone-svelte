@@ -13,7 +13,6 @@
 
   const videoPlayer: Attachment<HTMLDivElement> = (element) => {
     if (!element) return;
-    console.log('rerun');
 
     initPlayer();
     async function initPlayer() {
@@ -52,7 +51,6 @@
         }
       });
       player.on('ready', () => {
-        console.log('Plyr is ready', player?.muted);
         player?.play();
       });
       player.on('error', (event) => {
@@ -68,7 +66,6 @@
   // Detect changes to isMuted and update the player's muted state accordingly
   $effect(() => {
     if (player) {
-      console.log({ playerMuted: player.muted, isMuted });
       player.muted = isMuted;
     }
   });

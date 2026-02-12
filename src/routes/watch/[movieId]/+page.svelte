@@ -41,7 +41,6 @@
 
           if (data.trailer && data.trailer.key) {
             videoId = data.trailer.key;
-            console.log({ trailerURL: videoId });
           } else {
             error = 'No Trailer Found...';
           }
