@@ -3,8 +3,6 @@
   import Card from '$lib/components/Card.svelte';
 
   const { data }: PageProps = $props();
-
-  $effect(() => console.log(data));
 </script>
 
 <div class="absolute top-36 w-screen">

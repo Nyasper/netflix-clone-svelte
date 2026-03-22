@@ -1,6 +1,7 @@
 import { fetchPopularMovies, fetchTopRatedMovies, fetchTrendingMovies, getGenres, getMoviesByGenre } from '$lib/server/api/api';
 import type { PageServerLoad } from './$types';
 
+
 export const load = (async ({ fetch }) => {
   try {
     const [popularMovies, topRatedMovies, trendingMovies, genres] = await Promise.all([fetchPopularMovies(fetch), fetchTopRatedMovies(fetch), fetchTrendingMovies(fetch), getGenres(fetch)]);
