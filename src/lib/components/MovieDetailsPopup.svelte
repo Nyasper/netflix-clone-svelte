@@ -137,9 +137,9 @@
         class="absolute top-36 right-4 z-50 cursor-pointer rounded-full border-2 border-gray-700 p-3 transition-colors duration-200 hover:border-white"
       >
         {#if isMuted}
-          <VolumeOff size={20} />
+          <VolumeOff size={20} class="cursor-pointer" />
         {:else}
-          <Volume2 size={20} />
+          <Volume2 size={20} class="cursor-pointer" />
         {/if}
       </span>
     </div>
@@ -172,7 +172,7 @@
       <button
         onclick={navigateToWatchPage}
         class="rounded-full border-2 border-gray-700 p-3 transition-colors duration-200 hover:border-white"
-        ><Play class="h-6 w-6 text-white" />
+        ><Play class="h-6 w-6 cursor-pointer text-white" />
       </button>
 
       <button
@@ -180,16 +180,16 @@
         class="rounded-full border-2 border-gray-700 p-3 transition-colors duration-200 hover:border-white"
       >
         {#if addedToFavorites}
-          <Check class="h-6 w-6 text-white" />
+          <Check class="h-6 w-6 cursor-pointer text-white" />
         {:else}
-          <Plus class="h-6 w-6 text-white" />
+          <Plus class="h-6 w-6 cursor-pointer text-white" />
         {/if}
       </button>
 
       <button
         class="rounded-full border-2 border-gray-700 p-3 transition-colors duration-200 hover:border-white"
       >
-        <ThumbsUp class="h-6 w-6 text-white" />
+        <ThumbsUp class="h-6 w-6 cursor-pointer text-white" />
       </button>
     </div>
 
@@ -197,7 +197,7 @@
       class="rounded-full border-2 border-gray-700 p-3 transition-colors duration-200 hover:border-white"
       onclick={() => modalContext.openModal(movieId, trailerUrl)}
     >
-      <ChevronDown class="h-6 w-6 text-white" />
+      <ChevronDown class="h-6 w-6 cursor-pointer text-white" />
     </button>
   </div>
   <!-- Movie Info -->

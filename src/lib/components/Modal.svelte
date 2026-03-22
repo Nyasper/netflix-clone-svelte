@@ -27,21 +27,8 @@
   const addedToFav: boolean = $derived(favorites.some((fav) => fav.id === modalContext.movieId));
   let isMuted = $state(true);
 
-  const spokenLanguages = $derived(
-    modalContext.movieData?.spoken_languages
-      .map(
-        (lang) =>
-          `lang name: ${lang.name} | en-name: ${lang.english_name} | lang ISO: ${lang.iso_639_1}`
-      )
-      .join(', ') ?? ''
-  );
-
   const toggleMute = () => {
     isMuted = !isMuted;
-  };
-
-  type Props = {
-    movie?: MovieDetails;
   };
 </script>
 
@@ -80,8 +67,8 @@
                       modalContext.closeModal();
                     }}
                   >
-                    <Play size={20} />
-                    <span class="hidden font-semibold md:block">Play</span>
+                    <Play size={20} class="cursor-pointer" />
+                    <span class="hidden cursor-pointer font-semibold md:block">Play</span>
                   </button>
 
                   <button
@@ -89,16 +76,16 @@
                     onclick={() => addToFavorites(modalContext.movieData!)}
                   >
                     {#if addedToFav}
-                      <Check class="h-6 w-6 text-white" />
+                      <Check class="h-6 w-6 cursor-pointer text-white" />
                     {:else}
-                      <Plus class="h-6 w-6 text-white" />
+                      <Plus class="h-6 w-6 cursor-pointer text-white" />
                     {/if}
                   </button>
 
                   <button
                     class="rounded-full border-2 border-gray-700 p-3 transition-colors duration-200 hover:border-white"
                   >
-                    <ThumbsUp class="h-6 w-6 text-white" />
+                    <ThumbsUp class="h-6 w-6 cursor-pointer text-white" />
                   </button>
                   <button
                     onclick={toggleMute}
@@ -106,9 +93,9 @@
                   border-gray-700 p-3 transition-colors duration-200 hover:border-white"
                   >
                     {#if isMuted}
-                      <VolumeOff />
+                      <VolumeOff class="h-6 w-6 cursor-pointer text-white" />
                     {:else}
-                      <Volume2 />
+                      <Volume2 class="h-6 w-6 cursor-pointer text-white" />
                     {/if}
                   </button>
                 </div>

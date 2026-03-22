@@ -60,7 +60,7 @@
             onclick={() => goto(`/watch/${selectedMovie.id}`)}
           >
             <Play size={20} />
-            <span class="font-semibold">Play</span>
+            <span class="cursor-pointer font-semibold">Play</span>
           </button>
 
           <button
@@ -68,7 +68,7 @@
             onclick={() => modalContext.openModal(selectedMovie.id!, trailerId)}
           >
             <Info size={20} />
-            <span class="font-semibold">More Info</span>
+            <span class="cursor-pointer font-semibold">More Info</span>
           </button>
         </div>
 
