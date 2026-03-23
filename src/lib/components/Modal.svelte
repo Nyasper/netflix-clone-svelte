@@ -47,7 +47,7 @@
 
       <div class="content">
         {#if modalContext.trailerId}
-          <div class="pointer-events-none relative overflow-hidden">
+          <div class="pointer-events-none relative aspect-video overflow-hidden">
             <!-- gradient overlay -->
             <div
               class="absolute inset-0 bottom-0 z-30 bg-linear-to-t from-[#141414] to-transparent"

@@ -144,7 +144,7 @@
       </span>
     </div>
     {#if trailerUrl && isHovered && isTrailerDisplayed}
-      <div class="pointer-events-none">
+      <div class="pointer-events-none relative aspect-video overflow-hidden">
         <Player bind:this={player} videoId={trailerUrl} {isMuted} />
       </div>
     {:else if imageUrl && isHovered}

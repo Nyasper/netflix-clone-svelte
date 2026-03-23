@@ -32,7 +32,7 @@
   };
 </script>
 
-<main class="relative overflow-hidden">
+<main class="relative h-screen overflow-hidden">
   {#if trailerId}
     <Player videoId={trailerId} {isMuted} />
   {/if}

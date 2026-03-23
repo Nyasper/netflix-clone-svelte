@@ -54,7 +54,7 @@
   });
 </script>
 
-<div>
+<div class="h-screen bg-black">
   {#if loading}
     <p class="absolute top-28 left-12 w-full text-white">Loading Trailer...</p>
   {:else if videoId}

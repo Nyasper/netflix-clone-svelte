@@ -78,13 +78,13 @@
   ]}
 >
   <div
-    class={[
-      'flex aspect-video justify-center',
-      { 'w-[90%]" : "scale-[1.4] h-screen': showControls, 'scale-[1.4]': !showControls }
-    ]}
+    class={showControls
+      ? 'flex aspect-video w-[90%] scale-[1.4] justify-center'
+      : 'absolute inset-0 scale-[1.4]'}
   >
     <div
       id="player"
+      class="h-full w-full"
       data-plyr-provider="youtube"
       data-plyr-embed-id={videoId}
       {@attach videoPlayer}
