@@ -39,7 +39,7 @@ However, the original course project was built with **Svelte 4**, so I took the 
 | [Tailwind CSS 4](https://tailwindcss.com/)    | Utility-first styling          |
 | [Plyr](https://plyr.io/)                      | Video player                   |
 | [Lucide Svelte](https://lucide.dev/)          | Icon library                   |
-| [Bun](https://bun.sh/)                        | Runtime & package manager      |
+| [Bun](https://bun.sh/)                        | As the package manager         |
 | [Vite](https://vite.dev/)                     | Build tool & dev server        |
 
 ---
@@ -48,7 +48,7 @@ However, the original course project was built with **Svelte 4**, so I took the 
 
 ### Prerequisites
 
-- [Bun](https://bun.sh/) (recommended) or Node.js ≥ 18
+- Node.js ≥ 22 or Bun(recommended)
 - A TMDB API key (see [Environment Variables](#environment-variables))
 
 ### Installation
