@@ -1,6 +1,6 @@
 # 🎬 Netflix Clone
 
-A full-featured Netflix clone built with **SvelteKit 2** and **Svelte 5**, featuring a modern UI, video playback, search, and a personal watchlist — all powered by a real movies/TV API.
+A full-featured Netflix clone built with **Svelte 5** and **SvelteKit**, featuring a modern UI, video playback, search, and a personal watchlist — all powered by a real movies/TV API.
 
 ---
 
@@ -31,16 +31,16 @@ However, the original course project was built with **Svelte 4**, so I took the 
 
 ## 🛠️ Tech Stack
 
-| Technology | Purpose |
-|---|---|
-| [SvelteKit 2](https://kit.svelte.dev/) | Full-stack framework & routing |
-| [Svelte 5](https://svelte.dev/) | UI components with runes |
-| [TypeScript](https://www.typescriptlang.org/) | Type safety |
-| [Tailwind CSS 4](https://tailwindcss.com/) | Utility-first styling |
-| [Plyr](https://plyr.io/) | Video player |
-| [Lucide Svelte](https://lucide.dev/) | Icon library |
-| [Bun](https://bun.sh/) | Runtime & package manager |
-| [Vite](https://vite.dev/) | Build tool & dev server |
+| Technology                                    | Purpose                        |
+| --------------------------------------------- | ------------------------------ |
+| [SvelteKit 2](https://kit.svelte.dev/)        | Full-stack framework & routing |
+| [Svelte 5](https://svelte.dev/)               | UI components with runes       |
+| [TypeScript](https://www.typescriptlang.org/) | Type safety                    |
+| [Tailwind CSS 4](https://tailwindcss.com/)    | Utility-first styling          |
+| [Plyr](https://plyr.io/)                      | Video player                   |
+| [Lucide Svelte](https://lucide.dev/)          | Icon library                   |
+| [Bun](https://bun.sh/)                        | Runtime & package manager      |
+| [Vite](https://vite.dev/)                     | Build tool & dev server        |
 
 ---
 
@@ -112,19 +112,19 @@ src/
 ## 📸 Screenshots
 
 ### Hero Section
+
 ![Hero Section](screenshots/hero_section.png)
 
 ### Movie Catalogue
+
 ![Movie Catalogue](screenshots/catalogue.png)
 
 ### Preview Modal
+
 ![Preview Modal](screenshots/preview_modal.png)
 
 ### Watch Page
+
 ![Watch Page](screenshots/watch.png)
 
 ---
-
-## 📜 License
-
-This project is open source and available under the [MIT License](LICENSE).
